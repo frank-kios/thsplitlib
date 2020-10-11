@@ -1,0 +1,24 @@
+{
+    "name": "frank29259/thsplitlib",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Parinya",
+            "email": "frank29259@gmail.com",
+            "homepage": "https://parinya.online",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+      "ext-mbstring": "*"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "9.4.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Aosy\\": "src"
+        }
+    }
+}
