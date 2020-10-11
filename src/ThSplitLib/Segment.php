@@ -1,5 +1,6 @@
 <?php
 
+namespace Aosy\ThSplitLib;
 /**
  * Title: Thai Splitter Lib
  * Author: Suwicha Phuak-im
@@ -13,20 +14,28 @@ class Segment {
     private $_thcharacter_obj;
     private $_unicode_obj;
     private $_segmented_result = array();
-    
-    
-    
+
+    private $local = 'th_TH';
+
+    /**
+     * @return string
+     */
+    public function getLocal()
+    {
+        return $this->local;
+    }
+
+    /**
+     * @param string $local
+     */
+    public function setLocal($local = 'th_TH')
+    {
+        $this->local = $local;
+    }
+
     function __construct() {
-        if (!class_exists('Thchracter')) {
-        include(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'thcharacter.php');
-		}
-		
-		if (!class_exists('Unicode')) {
-        include(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'unicode.php');
-		}
 
-
-        $file_handle = fopen(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'dictionary' . DIRECTORY_SEPARATOR . 'dictionary.txt', "rb");
+        $file_handle = fopen(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'dictionary' . DIRECTORY_SEPARATOR . $this->getLocal().'.txt', "rb");
         while (!feof($file_handle)) {
             $line_of_text = fgets($file_handle);
             $this->_dictionary_array[crc32(trim($line_of_text))] = trim($line_of_text);
@@ -37,7 +46,7 @@ class Segment {
 
         // Load Helper Class/
         $this->_unicode_obj = new Unicode();
-        $this->_thcharacter_obj = new Thchracter();
+        $this->_thcharacter_obj = new THCharacter();
     }
 
     private function clear_duplicated($string) {
@@ -74,7 +83,7 @@ class Segment {
 
 
         // ลบเครื่องหมายคำพูด, ตัวแบ่งประโยค //
-        $this->_input_string = str_replace(array('\'', '‘', '’', '“', '”', '"', '-', '/', '(', ')', '{', '}', '...', '..', '…', '', ',', ':', '|', '\\'), '', $this->_input_string);
+        //$this->_input_string = str_replace(array('\'', '‘', '’', '“', '”', '"', '-', '/', '(', ')', '{', '}', '...', '..', '…', '', ',', ':', '|', '\\'), '', $this->_input_string);
         // เปลี่ยน newline ให้กลายเป็น Space เพื่อที่ใช้สำหรับ Trim
         $this->_input_string = str_replace(array("\r", "\r\n", "\n"), ' ', $this->_input_string);
 
@@ -91,24 +100,22 @@ class Segment {
         // Reverse Array สำหรับการใช้ Dictionary แบบ Reverse //
         foreach ($this->_input_string_exploded as $input_string_exploded_row) {
             $current_string_reverse_array = array_reverse($this->_unicode_obj->uni_strsplit(trim($input_string_exploded_row)));
-
-
-
             $current_array_result = $this->_segment_by_dictionary_reverse($current_string_reverse_array);
             foreach ($current_array_result as $each_result) {
                 if (trim($each_result) != '')
                     $this->_segmented_result[] = trim($each_result);
             }
+
+            //add space between words
+            $this->_segmented_result[] = ' ';
         }
 
         // จัดการคำที่ตัดที่ยาวผิดปกติ (~อาจจะเป็นเพราะว่าพิมผิด) โดยการตัดตาม Dict แบบธรรมดา//
         $tmp_result = array();
         foreach ($this->_segmented_result as $result_row) {
             if (mb_strlen($result_row) > 10) {
-
                 $current_string_array = $this->_unicode_obj->uni_strsplit(trim($result_row));
                 $current_array_result = $this->_segment_by_dictionary($current_string_array);
-
                 foreach ($current_array_result as $current_result_row) {
                     $tmp_result[] = trim($current_result_row);
                 }
