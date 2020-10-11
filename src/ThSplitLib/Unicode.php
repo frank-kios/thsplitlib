@@ -1,4 +1,7 @@
 <?php
+
+namespace Aosy\ThSplitLib;
+
 /**
  * Title: Thai Splitter Lib
  * Author: Suwicha Phuak-im

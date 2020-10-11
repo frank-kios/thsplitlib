@@ -1,11 +1,14 @@
 <?php
+
+namespace Aosy\ThSplitLib;
+
 /**
  * Title: Thai Splitter Lib
  * Author: Suwicha Phuak-im
  * Email: suwichalala@gmail.com
  * Website: http://www.projecka.com
  */
-class Thchracter
+class ThCharacter
 {
     function is_consonant($char_number)
     {
