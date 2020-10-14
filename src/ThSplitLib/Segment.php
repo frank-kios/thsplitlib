@@ -7,7 +7,8 @@ namespace Aosy\ThSplitLib;
  * Email: suwichalala@gmail.com
  * Website: http://www.projecka.com
  */
-class Segment {
+class Segment
+{
 
     private $_input_string;
     private $_dictionary_array = array();
@@ -33,9 +34,10 @@ class Segment {
         $this->local = $local;
     }
 
-    function __construct() {
+    function __construct()
+    {
 
-        $file_handle = fopen(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'dictionary' . DIRECTORY_SEPARATOR . $this->getLocal().'.txt', "rb");
+        $file_handle = fopen(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'dictionary' . DIRECTORY_SEPARATOR . $this->getLocal() . '.txt', "rb");
         while (!feof($file_handle)) {
             $line_of_text = fgets($file_handle);
             $this->_dictionary_array[crc32(trim($line_of_text))] = trim($line_of_text);
@@ -43,13 +45,18 @@ class Segment {
         fclose($file_handle);
 
 
-
         // Load Helper Class/
         $this->_unicode_obj = new Unicode();
         $this->_thcharacter_obj = new THCharacter();
     }
 
-    private function clear_duplicated($string) {
+    public static function word($text)
+    {
+        return implode('|', (new self())->get_segment_array($text));
+    }
+
+    private function clear_duplicated($string)
+    {
         //หดรูปตัวอักษรซ้ำๆ//
         $input_string_split = $this->_unicode_obj->uni_strsplit($string);
         $previous_char = '';
@@ -78,7 +85,8 @@ class Segment {
         return str_replace($dup_list_array, $dup_list_array_replace, $string);
     }
 
-    public function get_segment_array($input_string) {
+    public function get_segment_array($input_string)
+    {
         $this->_input_string = $input_string;
 
 
@@ -94,7 +102,6 @@ class Segment {
 
         // แยกประโยคจากช่องว่าง (~เผื่อไว้สำหรับภาษาอังกฤษ) //
         $this->_input_string_exploded = explode(' ', $this->_input_string);
-
 
 
         // Reverse Array สำหรับการใช้ Dictionary แบบ Reverse //
@@ -127,13 +134,14 @@ class Segment {
         return $this->_segmented_result;
     }
 
-    private function _segment_by_dictionary($input_array) {
+    private function _segment_by_dictionary($input_array)
+    {
 
         $result_array = array();
         $tmp_string = '';
 
         $pointer = 0;
-        $length_of_string = count($input_array)-1;
+        $length_of_string = count($input_array) - 1;
 
         while ($pointer <= $length_of_string) {
 
@@ -172,7 +180,7 @@ class Segment {
 
                     //echo $to_mark;
                 } else {
-                    
+
                 }
                 //echo '-------------------<br/>';
                 $dup_array = array();
@@ -193,13 +201,14 @@ class Segment {
         return $result_array;
     }
 
-    private function _segment_by_dictionary_reverse($input_array) {
+    private function _segment_by_dictionary_reverse($input_array)
+    {
 
         $result_array = array();
         $tmp_string = '';
 
         $pointer = 0;
-        $length_of_string = count($input_array)-1;
+        $length_of_string = count($input_array) - 1;
 
         while ($pointer <= $length_of_string) {
 
@@ -238,7 +247,7 @@ class Segment {
 
                     //echo $to_mark;
                 } else {
-                    
+
                 }
                 //echo '-------------------<br/>';
                 $dup_array = array();
