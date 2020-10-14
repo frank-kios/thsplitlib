@@ -22,6 +22,17 @@ Edit Mpdf.php ค้นหา `3) Break at SPACE`:
         $breakfound = [$contentctr, $charctr, $cutcontentctr, $cutcharctr, 'discard'];
     }
 ```
-    
-    
-    
+
+Edit Mpdf.php ค้นหา `// Selected OBJECTS are moved forward to next line, unless they come before a space or U+200B (type='discard')`:
+```php
+    /* -- END OTL -- */
+    $currContent = str_replace('|','',$currContent); 
+```
+
+Edit Mpdf.php ค้นหา `// another character will fit, so add it on`:
+```php
+    $currContent = str_replace('|','',$currContent); 
+    unset($content);
+    unset($contentB);
+```
+
