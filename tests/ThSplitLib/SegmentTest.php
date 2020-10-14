@@ -33,9 +33,9 @@ class SegmentTest extends TestCase
             'ซี',
             'ดาน',
             ' ',
-            ];
-        foreach ($output as $item){
-            $this->assertContains($item,$result);
+        ];
+        foreach ($output as $item) {
+            $this->assertContains($item, $result);
         }
     }
 
@@ -49,6 +49,13 @@ class SegmentTest extends TestCase
     {
         $this->segment->setLocal('en_US');
         $this->assertEquals('en_US', $this->segment->getLocal());
+    }
+
+    public function testWord()
+    {
+        $input = 'คาร์โก้กฤษณ์คอมเมนต์เฮอร์ริเคนซีดาน';
+        $result = Segment::word($input);
+        $this->assertEquals('คาร์|โก้|กฤษณ์|คอม|เมนต์|เฮอร์|ริ|เคน|ซี|ดาน| ', $result);
     }
 
 }
