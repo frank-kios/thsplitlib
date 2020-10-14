@@ -36,3 +36,6 @@ Edit Mpdf.php ค้นหา `// another character will fit, so add it on`:
     unset($contentB);
 ```
 
+Credits
+- [Pongsathon Janyoi](https://medium.com/@pongsathon.janyoi?source=post_page-----bb66ca383b75--------------------------------)
+
