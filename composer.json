@@ -1,8 +1,9 @@
 {
     "name": "frank29259/thsplitlib",
+    "description": "thai word split library",
     "type": "library",
     "license": "MIT",
-    "version": "1.0",
+    "version": "1.2",
     "authors": [
         {
             "name": "Parinya",
