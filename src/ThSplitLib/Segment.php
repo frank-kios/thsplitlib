@@ -47,7 +47,7 @@ class Segment
 
         // Load Helper Class/
         $this->_unicode_obj = new Unicode();
-        $this->_thcharacter_obj = new THCharacter();
+        $this->_thcharacter_obj = new ThCharacter();
     }
 
     public static function word($text)
