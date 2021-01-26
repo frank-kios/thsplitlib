@@ -3,7 +3,7 @@
     "description": "thai word split library",
     "type": "library",
     "license": "MIT",
-    "version": "1.3",
+    "version": "dev-master",
     "authors": [
         {
             "name": "Parinya",
